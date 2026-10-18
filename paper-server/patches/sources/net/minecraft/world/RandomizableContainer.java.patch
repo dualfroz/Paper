@@ -20,7 +20,7 @@
      }
  
      default boolean trySaveLootTable(final ValueOutput base) {
-@@ -61,25 +_,41 @@
+@@ -61,31 +_,63 @@
          }
  
          base.store("LootTable", LootTable.KEY_CODEC, lootTable);
@@ -64,8 +64,14 @@
              LootParams.Builder params = new LootParams.Builder((ServerLevel)level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(worldPosition));
              if (player != null) {
                  params.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
-@@ -88,4 +_,16 @@
-             lootTable.fill(this, params.create(LootContextParamSets.CHEST), this.getLootTableSeed());
+             }
+ 
+-            lootTable.fill(this, params.create(LootContextParamSets.CHEST), this.getLootTableSeed());
++            // Paper start - keep the loot table if LootGenerateEvent was cancelled
++            if (!lootTable.fill(this, params.create(LootContextParamSets.CHEST), this.getLootTableSeed()) && !forceClearLootTable) {
++                this.setLootTable(lootTableKey);
++            }
++            // Paper end - keep the loot table if LootGenerateEvent was cancelled
          }
      }
 +
