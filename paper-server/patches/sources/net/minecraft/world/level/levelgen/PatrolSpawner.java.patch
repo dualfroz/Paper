@@ -51,7 +51,7 @@
 +                        this.nextTick += level.paperConfig().entities.behavior.pillagerPatrols.spawnDelay.ticks + random.nextInt(1200);
 +                    }
 +
-+                    if (dayCount >= level.paperConfig().entities.behavior.pillagerPatrols.start.day && level.isBrightOutside()) {
++                    if ((!level.paperConfig().entities.behavior.pillagerPatrols.start.day.isDefined() || dayCount >= level.paperConfig().entities.behavior.pillagerPatrols.start.day.intValue()) && level.isBrightOutside()) {
 +                        if (random.nextDouble() < level.paperConfig().entities.behavior.pillagerPatrols.spawnChance) {
 +                            // Paper end - Pillager patrol spawn settings and per player options
                              if (playerCount >= 1) {
